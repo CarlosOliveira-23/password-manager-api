@@ -36,7 +36,7 @@ password-manager-api/
 ## ⚙️ Installation
 ### 1️⃣ Clone the repository
 ```bash
-git clone https://github.com/your-username/password-manager-api.git
+git clone https://github.com/CarlosOliveira-23/password-manager-api
 cd password-manager-api
 ```
 
