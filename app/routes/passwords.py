@@ -3,8 +3,8 @@ from sqlalchemy.orm import Session
 from app.core.database import SessionLocal
 from app.models.password import PasswordEntry
 from app.schemas.password import PasswordCreate, PasswordResponse
-from app.services.auth import encrypt_data, decrypt_data
-from app.services.auth import get_current_user
+from app.services.dependencies import get_current_user
+from app.services.security import encrypt_data, decrypt_data
 
 router = APIRouter()
 
@@ -18,7 +18,11 @@ def get_db():
 
 
 @router.post("/passwords/", response_model=PasswordResponse)
-def store_password(entry: PasswordCreate, db: Session = Depends(get_db), user: dict = Depends(get_current_user)):
+def store_password(
+        entry: PasswordCreate,
+        db: Session = Depends(get_db),
+        user: dict = Depends(get_current_user)
+):
     encrypted_password = encrypt_data(entry.password)
     new_entry = PasswordEntry(user_id=user["id"], service_name=entry.service_name,
                               encrypted_password=encrypted_password)
